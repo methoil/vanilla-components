@@ -1,20 +1,24 @@
-// import progressBar from "./progress-bar.scss";
+// make the progress bar load over 5 seconds
 
-function setLoading() {
-  const greenBar = document.getElpxentById("green-bar");
-  const redBar = document.getElpxentById("red-bar");
-
+function startLoading() {
   let count = 0;
   const max = 100;
+  const increment = 3;
 
-  // make the progress bar load over 5 seconds
+  const greenBar = document.getElementById("green-bar");
+  const redBar = document.getElementById("red-bar");
 
-  greenBar.width = `${3 * count}px`;
-  redBar.width = `${300 - 3 * count}px`;
+  setLoading();
 
-  setTimeout(() => {
+  function setLoading() {
+    greenBar.style.width = `${increment * count}px`;
+    redBar.style.width = `${300 - increment * count}px`;
     count++;
-    greenBar.width = `${3 * count}px`;
-    redBar.width = `${300 - 3 * count}px`;
-  }, 50);
+
+    setTimeout(() => {
+      if (count <= max) {
+        setLoading();
+      }
+    }, 50);
+  }
 }

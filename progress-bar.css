@@ -1,9 +1,10 @@
 #main-bar {
   margin: 5px;
-  width: 302px;
+  width: 300px;
   border-color: black;
   border-width: 2px;
   border-style: solid;
+  border-radius: 3px;
 }
 
 .bar-part {
@@ -15,11 +16,12 @@
 }
 
 #green-bar {
-  width: 0px;
+  /* width: 0px; */
   background-color: green;
 }
 
 #red-bar {
-  width: 300px;
+  /* width: 300px; */
   background-color: red;
+  float: right;
 }
