@@ -1,0 +1,25 @@
+#main-bar {
+  margin: 5px;
+  width: 302px;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.bar-part {
+  height: 50px;
+}
+
+#main-bar > .bar-status {
+  display: inline-block;
+}
+
+#green-bar {
+  width: 0px;
+  background-color: green;
+}
+
+#red-bar {
+  width: 300px;
+  background-color: red;
+}
