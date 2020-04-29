@@ -1,4 +1,6 @@
-#main-bar {
+#status-bar-container {
+  display: flex;
+  justify-content: center;
   margin: 5px;
   width: 300px;
   border-color: black;
@@ -7,21 +9,27 @@
   border-radius: 3px;
 }
 
-.bar-part {
-  height: 50px;
-}
-
-#main-bar > .bar-status {
+#status-bar-container > .bar-status {
   display: inline-block;
 }
 
 #green-bar {
-  /* width: 0px; */
+  width: 0px;
   background-color: green;
 }
 
 #red-bar {
-  /* width: 300px; */
+  width: 300px;
   background-color: red;
-  float: right;
+}
+
+#status-number {
+  position: absolute;
+  align-self: center;
+  color: black;
+  font-size: 30px;
+}
+
+.bar-part {
+  height: 50px;
 }

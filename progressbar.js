@@ -7,12 +7,14 @@ function startLoading() {
 
   const greenBar = document.getElementById("green-bar");
   const redBar = document.getElementById("red-bar");
+  const percent = document.getElementById("status-number");
 
   setLoading();
 
   function setLoading() {
     greenBar.style.width = `${increment * count}px`;
     redBar.style.width = `${300 - increment * count}px`;
+    percent.innerHTML = `${count}%`;
     count++;
 
     setTimeout(() => {
