@@ -2,11 +2,19 @@
 
 <link rel="stylesheet" href="progress-bar.css" />
 
-<body onload="startLoading()">
-  <div id="status-bar-container" class="bar-part">
-    <span class="bar-status bar-part" id="green-bar"></span
-    ><!--
- --><span class="bar-status bar-part" id="red-bar"></span>
-    <span class="bar-status" id="status-number">0%</span>
+<body onload="setup()">
+  <div class="component-container">
+    <div class="controls-container">
+      Load time:
+      <input id="input-text-box" type="text" onkeyup="onInputChange(event)" />
+      <input type="button" value="Enter" onclick="startLoading(event)" />
+    </div>
+
+    <div class="status-bar-container" class="bar-part">
+      <span class="bar-status bar-part" id="green-bar"></span
+      ><!--
+   --><span class="bar-status bar-part" id="red-bar"></span>
+      <span class="bar-status" id="status-number">0%</span>
+    </div>
   </div>
 </body>

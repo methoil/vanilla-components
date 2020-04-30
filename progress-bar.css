@@ -1,4 +1,9 @@
-#status-bar-container {
+.component-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-bar-container {
   display: flex;
   justify-content: center;
   margin: 5px;
@@ -9,7 +14,7 @@
   border-radius: 3px;
 }
 
-#status-bar-container > .bar-status {
+.status-bar-container > .bar-status {
   display: inline-block;
 }
 
@@ -32,4 +37,8 @@
 
 .bar-part {
   height: 50px;
+}
+
+.controls-container {
+  margin-left: 5px;
 }
