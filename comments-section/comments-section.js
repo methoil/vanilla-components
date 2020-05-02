@@ -27,10 +27,11 @@ function createCommentCbFactory(action, level) {
   }
 }
 
-function createCommentInput(event, level) {
+function createCommentInput(event, level, text) {
   const newCommentInput = document.createElement("textarea");
   newCommentInput.classList.add("comment-input-textbox");
   newCommentInput.classList.add(`reply-level-${level}`);
+  newCommentInput.value = text || "";
 
   const newCommentButton = createButton(
     "Add Comment",
@@ -40,7 +41,7 @@ function createCommentInput(event, level) {
 
   const newCommentInputContainer = document.createElement("div");
   newCommentInputContainer.classList.add("comment-container");
-  newCommentInputContainer.dataset.level = level; // TODO: maybe not needed
+  newCommentInputContainer.dataset.level = level;
 
   newCommentInputContainer.appendChild(newCommentInput);
   newCommentInputContainer.appendChild(newCommentButton);
@@ -64,8 +65,8 @@ function submitCommentCb(event, level) {
     "Reply",
     createCommentCbFactory("reply", level + 1)
   );
-  const removeButton = createButton("Remove Comment", () => {}); // TODO: remove CB
-  const editButton = createButton("Edit Comment", () => {}); // TODO: edit CB
+  const removeButton = createButton("Remove Comment", removeCb);
+  const editButton = createButton("Edit Comment", editCb);
 
   buttonContainer.appendChild(removeButton);
   buttonContainer.appendChild(editButton);
@@ -73,22 +74,53 @@ function submitCommentCb(event, level) {
 
   const newCommentContainer = document.createElement("div");
   newCommentContainer.classList.add("comment-container");
-  newCommentContainer.dataset.level = level; // TODO: maybe not needed
+  newCommentContainer.dataset.level = level;
 
   newCommentContainer.appendChild(newComment);
   newCommentContainer.appendChild(buttonContainer);
-  newCommentContainer.dataset.level = 1;
+  newCommentContainer.dataset.level = level;
 
-  allCommentsContainer.appendChild(newCommentContainer);
-  event.target.parentElement.remove();
+  const inputContainer = event.target.parentElement;
+  const container = inputContainer.parentElement;
+  // for (let child of inputContainer.children) {
+  //   newCommentContainer.appendChild(child);
+  // }
+  container.replaceChild(newCommentContainer, inputContainer);
 }
 
-// TODO: make this generic, to work with replys
-// need to pass which level we're in -- use https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
-
 function replyCb(event, level) {
-  const commentContainer = event.target.parentElement;
+  const commentContainer = event.target.parentElement.parentElement;
   commentContainer.appendChild(createCommentInput(event, level));
+}
+
+function removeCb(event) {
+  const commentContainer = event.target.parentElement.parentElement;
+  commentContainer.remove();
+}
+
+function editCb(event) {
+  const commentContainer = event.target.parentElement.parentElement;
+
+  const commentControls = commentContainer.getElementsByClassName(
+    "comment-button-container"
+  )[0];
+  commentControls.remove();
+
+  const textBox = commentContainer.getElementsByClassName("comment-text")[0];
+  const text = textBox.innerHTML;
+  const newInputContainer = createCommentInput(
+    event,
+    commentContainer.dataset.level,
+    text
+  );
+  // TODO: children getting overwritten...
+  // for (let child of commentContainer.children) {
+  //   newInputContainer.appendChild(child);
+  // }
+  commentContainer.parentElement.replaceChild(
+    newInputContainer,
+    commentContainer
+  );
 }
 
 function createButton(label, callback) {
