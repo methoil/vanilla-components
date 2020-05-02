@@ -1,8 +1,9 @@
-.comment-input-container {
+.comment-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   width: 300px;
+  margin: 5px;
 }
 
 .comment-input-textbox {
@@ -20,4 +21,11 @@
   border-width: 1px;
   border-color: black;
   border-style: solid;
+  margin: 5px;
+}
+
+.comment-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
