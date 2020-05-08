@@ -1,3 +1,6 @@
+import "./comment-input";
+import "./comment-text";
+
 let allCommentsContainer;
 let addRootCommentButton;
 
@@ -28,6 +31,7 @@ function createCommentCbFactory(action, level) {
 }
 
 function createCommentInput(event, level, text) {
+  // TODO: most of this gets replaced with comment-text
   const newCommentInput = document.createElement("textarea");
   newCommentInput.classList.add("comment-input-textbox");
   newCommentInput.classList.add(`reply-level-${level}`);
@@ -49,6 +53,7 @@ function createCommentInput(event, level, text) {
 }
 
 function submitCommentCb(event, level) {
+  // TODO: most of this gets replaced with comment-text
   const text = event.target.parentElement.getElementsByClassName(
     "comment-input-textbox"
   )[0].value;
@@ -83,36 +88,6 @@ function submitCommentCb(event, level) {
   const inputContainer = event.target.parentElement;
   const container = inputContainer.parentElement;
   container.replaceChild(newCommentContainer, inputContainer);
-}
-
-function replyCb(event, level) {
-  const commentContainer = event.target.parentElement.parentElement;
-  commentContainer.appendChild(createCommentInput(event, level));
-}
-
-function removeCb(event) {
-  const commentContainer = event.target.parentElement.parentElement;
-  commentContainer.remove();
-}
-
-function editCb(event) {
-  const commentContainer = event.target.parentElement.parentElement;
-
-  const commentControls = commentContainer.getElementsByClassName(
-    "comment-button-container"
-  )[0];
-  commentControls.remove();
-
-  const textBoxElement = commentContainer.getElementsByClassName(
-    "comment-text"
-  )[0];
-  const text = textBoxElement.innerHTML;
-  const newInputContainer = createCommentInput(
-    event,
-    commentContainer.dataset.level,
-    text
-  );
-  commentContainer.replaceChild(newInputContainer, textBoxElement);
 }
 
 function createButton(label, callback) {
