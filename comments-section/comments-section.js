@@ -82,9 +82,6 @@ function submitCommentCb(event, level) {
 
   const inputContainer = event.target.parentElement;
   const container = inputContainer.parentElement;
-  // for (let child of inputContainer.children) {
-  //   newCommentContainer.appendChild(child);
-  // }
   container.replaceChild(newCommentContainer, inputContainer);
 }
 
@@ -106,21 +103,16 @@ function editCb(event) {
   )[0];
   commentControls.remove();
 
-  const textBox = commentContainer.getElementsByClassName("comment-text")[0];
-  const text = textBox.innerHTML;
+  const textBoxElement = commentContainer.getElementsByClassName(
+    "comment-text"
+  )[0];
+  const text = textBoxElement.innerHTML;
   const newInputContainer = createCommentInput(
     event,
     commentContainer.dataset.level,
     text
   );
-  // TODO: children getting overwritten...
-  // for (let child of commentContainer.children) {
-  //   newInputContainer.appendChild(child);
-  // }
-  commentContainer.parentElement.replaceChild(
-    newInputContainer,
-    commentContainer
-  );
+  commentContainer.replaceChild(newInputContainer, textBoxElement);
 }
 
 function createButton(label, callback) {
