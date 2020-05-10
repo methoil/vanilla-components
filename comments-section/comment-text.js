@@ -1,20 +1,21 @@
-class CommentTextbox extends HTMLElement {
+import "./comment-input.js";
+
+class CommentText extends HTMLElement {
   constructor() {
     super();
     this.root = this.attachShadow({ mode: "open" });
-    // reply level ??
   }
   // content: {text: string, level: number}
-  set content(content) {
+  set content(payload) {
     this.root.innerHTML = `
     <div class="comment-container">
 
       <div class="comment-text">
-        ${content}
+        ${payload.text}
       </div>
 
       <div class="comment-button-container">
-        <input type="button" onclick="${removeCb}">
+        <input type="button" onclick="${removeCb(payload.level)}">
           Remove
         </input>
 
@@ -32,10 +33,14 @@ class CommentTextbox extends HTMLElement {
   }
 }
 
-// TODO: wrap to pass level
-function replyCb(event, level) {
-  const commentContainer = event.target.parentElement.parentElement;
-  commentContainer.appendChild(createCommentInput(event, level));
+function replyCb(level) {
+  return (event) => {
+    const commentContainer = event.target.parentElement.parentElement;
+
+    const commentInput = document.createElement("comment-input");
+    commentInput.content = { level, text: "" };
+    commentContainer.appendChild(commentInput);
+  };
 }
 
 function removeCb(event) {
@@ -55,11 +60,10 @@ function editCb(event) {
     "comment-text"
   )[0];
   const text = textBoxElement.innerHTML;
-  // TODO: use the web component
-  const newInputContainer = createCommentInput(
-    event,
-    commentContainer.dataset.level,
-    text
-  );
-  commentContainer.replaceChild(newInputContainer, textBoxElement);
+
+  const commentInput = document.createElement("comment-input");
+  commentInput.content = { level, text };
+  commentContainer.replaceChild(commentInput, textBoxElement);
 }
+
+customElements.define("comment-text", CommentText);
