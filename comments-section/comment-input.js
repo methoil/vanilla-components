@@ -8,14 +8,12 @@ class CommentInput extends HTMLElement {
   // payload: {text: string, level: number}
   set content(payload) {
     this.root.innerHTML = `
+    <style>
+      @import url("./comments-section.css")
+    </style>
     <div class="comment-container">
-
-      <textarea class="comment-input-textbox">
-      </textarea>
-
+      <textarea class="comment-input-textbox reply-level-${payload.level}""></textarea>
       <input id="addCommentButton" type="button" value="Add Comment">
-      </input>
-
     </div>
     `;
 
@@ -35,8 +33,6 @@ function submitCb(level) {
 
     const newCommentContainer = document.createElement("comment-text");
     newCommentContainer.content = { level, text: textArea.value };
-    // const fuck = document.createElement("div");
-    // fuck.innerHTML = "fuck";
 
     const commentInput = inputContainer.getRootNode().host;
     const commentContainer = commentInput.parentElement;

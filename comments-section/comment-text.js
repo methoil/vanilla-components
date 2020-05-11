@@ -5,12 +5,14 @@ class CommentText extends HTMLElement {
     super();
     this.root = this.attachShadow({ mode: "open" });
   }
-  // content: {text: string, level: number}
+  // payload: {text: string, level: number}
   set content(payload) {
     this.root.innerHTML = `
+    <style>
+      @import url("./comments-section.css")
+    </style>
     <div class="comment-container">
-
-      <div class="comment-text">
+      <div class="comment-text reply-level-${payload.level}">
         ${payload.text}
       </div>
 
