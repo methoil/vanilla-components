@@ -15,21 +15,20 @@ class CommentText extends HTMLElement {
       </div>
 
       <div class="comment-button-container">
-        <input type="button" onclick="${removeCb(payload.level)}">
-          Remove
-        </input>
-
-        <input type="button" onclick="${editCb}">
-          Edit
-        </input>
-
-        <input type="button" onClick="${replyCb}">
-          Reply
-        </input>
+        <input id="removeButton" type="button" value="Remove">
+        <input id="editButton" type="button" value="Edit">
+        <input id="replyButton" type="button" value="Reply">
       </div>
 
     </div>
     `;
+
+    const removeButton = this.root.getElementById("removeButton");
+    removeButton.onclick = removeCb;
+    const replyButton = this.root.getElementById("replyButton");
+    replyButton.onclick = replyCb(payload.level + 1);
+    const editButton = this.root.getElementById("editButton");
+    editButton.onclick = editCb(payload.level);
   }
 }
 
@@ -48,22 +47,24 @@ function removeCb(event) {
   commentContainer.remove();
 }
 
-function editCb(event) {
-  const commentContainer = event.target.parentElement.parentElement;
+function editCb(level) {
+  return (event) => {
+    const commentContainer = event.target.parentElement.parentElement;
 
-  const commentControls = commentContainer.getElementsByClassName(
-    "comment-button-container"
-  )[0];
-  commentControls.remove();
+    const commentControls = commentContainer.getElementsByClassName(
+      "comment-button-container"
+    )[0];
+    commentControls.remove();
 
-  const textBoxElement = commentContainer.getElementsByClassName(
-    "comment-text"
-  )[0];
-  const text = textBoxElement.innerHTML;
+    const textBoxElement = commentContainer.getElementsByClassName(
+      "comment-text"
+    )[0];
+    const text = textBoxElement.innerHTML;
 
-  const commentInput = document.createElement("comment-input");
-  commentInput.content = { level, text };
-  commentContainer.replaceChild(commentInput, textBoxElement);
+    const commentInput = document.createElement("comment-input");
+    commentInput.content = { level, text };
+    commentContainer.replaceChild(commentInput, textBoxElement);
+  };
 }
 
 customElements.define("comment-text", CommentText);
